@@ -4,6 +4,7 @@ import AddEventType from './manager/eventTypes/add_event_type';
 import { cakeColumns, decorationColumns, eventTypeColumns, themeColumns, venueColumns } from './datatable/datatablesource';
 import UpdateEventType from './manager/eventTypes/update_event_type';
 import AddVenue from './manager/venue/add_venue';
+import UpdateVenue from './manager/venue/update_venue';
 
 const Body = () =>{
     return(
@@ -17,6 +18,7 @@ const Body = () =>{
 
             <Route path="/venue" element={ <AddList columns={venueColumns} /> } />
             <Route path="/venue/new" element={ <AddVenue /> } />
+            <Route path="/venue/update/:venueId" element={ <UpdateVenue /> } />
             
         </Routes>
         </>
