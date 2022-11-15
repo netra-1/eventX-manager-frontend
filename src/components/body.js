@@ -7,6 +7,7 @@ import AddVenue from './manager/venue/add_venue';
 import UpdateVenue from './manager/venue/update_venue';
 import AddTheme from './manager/theme/add_theme';
 import UpdateTheme from './manager/theme/update_theme';
+import AddCake from './manager/cake/add_cake';
 
 const Body = () =>{
     return(
@@ -25,6 +26,9 @@ const Body = () =>{
             <Route path="/theme" element={ <AddList columns={themeColumns} /> } />
             <Route path="/theme/new" element={ <AddTheme /> } />
             <Route path="/theme/update/:themeId" element={ <UpdateTheme /> } />
+
+            <Route path="/cake" element={ <AddList columns={cakeColumns} /> } />
+            <Route path="/cake/new" element={ <AddCake /> } />
             
         </Routes>
         </>
