@@ -8,6 +8,7 @@ import UpdateVenue from './manager/venue/update_venue';
 import AddTheme from './manager/theme/add_theme';
 import UpdateTheme from './manager/theme/update_theme';
 import AddCake from './manager/cake/add_cake';
+import UpdateCake from './manager/cake/update_cake';
 
 const Body = () =>{
     return(
@@ -29,6 +30,7 @@ const Body = () =>{
 
             <Route path="/cake" element={ <AddList columns={cakeColumns} /> } />
             <Route path="/cake/new" element={ <AddCake /> } />
+            <Route path="/cake/update/:cakeId" element={ <UpdateCake /> } />
             
         </Routes>
         </>
