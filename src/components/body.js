@@ -3,6 +3,7 @@ import AdminDashboard from './manager/dashbord/dashboard';
 import AddEventType from './manager/eventTypes/add_event_type';
 import { cakeColumns, decorationColumns, eventTypeColumns, themeColumns, venueColumns } from './datatable/datatablesource';
 import UpdateEventType from './manager/eventTypes/update_event_type';
+import AddList from './list/List'; 
 import AddVenue from './manager/venue/add_venue';
 import UpdateVenue from './manager/venue/update_venue';
 import AddTheme from './manager/theme/add_theme';
