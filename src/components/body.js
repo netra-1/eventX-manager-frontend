@@ -37,6 +37,7 @@ const Body = () =>{
             <Route path="/decoration" element={ <AddList columns={decorationColumns} /> } />
             <Route path="/decoration/new" element={ <AddDecoration /> } />
             <Route path="/decoration/update/:decorationId" element={ <UpdateDecoration /> } />
+
             
         </Routes>
         </>
