@@ -10,6 +10,7 @@ import UpdateTheme from './manager/theme/update_theme';
 import AddCake from './manager/cake/add_cake';
 import UpdateCake from './manager/cake/update_cake';
 import AddDecoration from './manager/decoration/add_decoration';
+import UpdateDecoration from './manager/decoration/update_decoration';
 
 const Body = () =>{
     return(
@@ -35,6 +36,7 @@ const Body = () =>{
 
             <Route path="/decoration" element={ <AddList columns={decorationColumns} /> } />
             <Route path="/decoration/new" element={ <AddDecoration /> } />
+            <Route path="/decoration/update/:decorationId" element={ <UpdateDecoration /> } />
             
         </Routes>
         </>
