@@ -9,7 +9,85 @@ import { IoMdCloudUpload } from "react-icons/io";
 import { Link } from "react-router-dom";
 
 const UpdateDrink = () => {
+  const { drinkId } = useParams();
+
+  const config = {
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  };
+
+  const [name, setDrinkName] = useState("");
+  const [description, setDescription] =useState("");
+  const [price, setPrice] =useState("");
+  const [image, setImage] =useState("");
+
+  const [category, setCategory] =useState("");
+  const [alcoholic, setAlcoholic] =useState("");
+  const [imported, setIsImported] =useState("");
+  var isAlcoholic = (alcoholic === 'true');
+  var isImported = (imported === 'true');
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/admin/drink/" + drinkId, config)
+      .then((response) => {
+        console.log(response);
+        setDrinkName(response.data.data.name);
+        setDescription(response.data.data.description);
+        setPrice(response.data.data.price);
+        setCategory(response.data.data.category);
+        setAlcoholic(response.data.data.alcoholic);
+        setImage(response.data.data.image);
+        console.log(response.data.data.name);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    try {
+    const data = new FormData();
+    data.append("name", name);
+    data.append("description", description);
+    data.append("price", price);
+    data.append("image", image);
+    data.append("category",category);
+    data.append("alcoholic",isAlcoholic);
+    data.append("imported",isImported);
+
+      await axios
+        .put(
+          "http://localhost:8000/admin/drink/" + drinkId,
+          data, config
+        )
+        .then(() => {
+          window.location.replace("/drink");
+          toast.success("Updated successfully");
+        })
+        .catch((e) => {
+          toast.failed("Failed to update");
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   
+  const getInitialState = () => {
+    const value = "WHISKEY";
+    return value;
+  };
+
+  const [value, setValue] = useState(getInitialState);
+
+  const handleChange = (e) => {
+    setValue(e.target.value);
+    setCategory(e.target.value)
+  };
+
   return (
     <>
       <div className="ml-10">
