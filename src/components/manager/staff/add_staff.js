@@ -6,7 +6,42 @@ import "react-toastify/dist/ReactToastify.css";
 import { IoMdCloudUpload } from "react-icons/io";
 import { Link } from "react-router-dom";
 
-const AddStaff = () => { 
+const AddStaff = () => {
+
+  const [email, setEmail] = useState("");
+  const [fullName, setFullName] =useState("");
+  const [citizenship, setCitizenship] =useState("");
+  const [panNum, setPanNum] =useState("");
+  const [address, setAddress] =useState("");
+
+  const config = {
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  };
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+
+    const data = {
+        email : email,
+        category : "STAFF",
+        profile : {"fullName": fullName, "citizenship":citizenship, "pan":panNum},
+    }
+
+    try {
+      await axios
+        .post("http://localhost:8000/admin/user/add-staff", data, config)
+        .then((response) => {
+          window.location.replace("/staff");
+          toast.success("Successfully added");
+          console.log(response.data.msg);
+        });
+    } catch (e) {
+      toast.failed("Failed to add");
+      console.log(e);
+    }
+  };  
 
   return (
     <>
