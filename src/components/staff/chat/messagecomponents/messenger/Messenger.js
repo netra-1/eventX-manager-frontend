@@ -9,6 +9,44 @@ import no_conversation from '../../../../../assets/img/no_conversation.png';
 import {useSocket} from "../../../../../context/socket";
 
 const Messenger = () => {
+  const [userList, setUserList] = useState([]);
+  const [currentChat, setCurrentChat] = useState(null);
+  const [allConversations, setAllConversations] = useState([]);
+
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+  const [newMessageReceivedUsers, setNewMessageReceivedUsers] = useState([])
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const searchConversation = (searchQuery) => {
+    const searchResult = allConversations.filter(
+      (c) =>
+        c.members.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setUserList(searchResult);
+
+    if (searchQuery === "") {
+      setUserList(allConversations);
+    }
+  };
+
+  const handleUserItemClick = (userItem) => async (e) => {
+    e.preventDefault()
+    setCurrentChat(userItem)
+      const res = await axios.get(
+        `http://localhost:8000/admin/chat/?to=${userItem._id}`,config
+      );
+
+      if(res.data.success){
+        setMessages(res.data.data)
+        if(newMessageReceivedUsers.includes(userItem._id)){
+          setNewMessageReceivedUsers(prevState => (prevState.filter(user => user !== userItem._id)))
+        }
+      }
+  }
 
   return (
     <>
@@ -17,6 +55,14 @@ const Messenger = () => {
           <p className="conversation-heading"> Conversations</p>
 
           <div className="chatmenuWrapper">
+            {/* <div className="search-conversation">
+              <input
+                className="search-conversation__input"
+                placeholder="name"
+                onChange={(e) => searchConversation(e.target.value)}
+              />
+              <BiSearch className="search-conversation__icon" />
+            </div> */}
             {userList.map((userItem) => {
               const hasNewMsg = newMessageReceivedUsers.includes(userItem._id)
               return (
@@ -67,6 +113,20 @@ const Messenger = () => {
                         setNewMessage(e.target.value);
                       }}
                       value={newMessage} id="message-to-send" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:white dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your message" required />
+
+
+                    {/* <input
+                      className="chat__input"
+                      name="message-to-send"
+                      id="message-to-send"
+                      placeholder="Enter your message"
+                      rows="3"
+                      onChange={(e) => {
+                        setNewMessage(e.target.value);
+                      }}
+                      value={newMessage}
+                      data-test="text"
+                    /> */}
                     {" "}
                     <div>
                       <button
