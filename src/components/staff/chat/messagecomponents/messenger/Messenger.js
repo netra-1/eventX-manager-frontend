@@ -17,6 +17,61 @@ const Messenger = () => {
   const [newMessage, setNewMessage] = useState("");
   const [newMessageReceivedUsers, setNewMessageReceivedUsers] = useState([])
 
+  const scrollRef = useRef();
+
+  const { sendMessage, receivedMessage } = useSocket()
+
+  const config = {
+    headers : {
+        Authorization : localStorage.getItem('token'),
+    }
+  }
+
+  useEffect(() => {
+    (async () => {
+      const res = await axios.get(
+        `http://localhost:8000/admin/user/chat-contact`,config
+      );
+
+      if(res.data.success){
+        setUserList(res.data.data.chatUserList)
+        setAllConversations(res.data.data.chatUserList)
+      }
+    })()
+  }, []);
+
+  useEffect(() => {
+    if(receivedMessage){
+      if(currentChat?._id === receivedMessage.sender){
+        setMessages(prevState => ([...prevState, receivedMessage]));
+      }else{
+        setNewMessageReceivedUsers(prevState => ([...prevState, receivedMessage.sender]))
+      }
+    }
+  }, [receivedMessage])
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (newMessage !== "") {
+      const message = {
+        message: newMessage,
+        to: currentChat._id,
+      };
+      try {
+        const res = await axios.post(
+          "http://localhost:8000/api/chat",
+          message,
+          config
+        );
+        sendMessage(message.message, message.to)
+        setMessages(prevState => ([...prevState, res.data.data]));
+        setNewMessage("");
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
+
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
