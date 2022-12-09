@@ -137,3 +137,52 @@ export const customerColumns = [
     width: 120,
   },
 ];
+
+export const eventColumn = [
+  {
+    field: "eventType",
+    headerName: "Event",
+    width: 250,
+  },
+  {
+    field: "UserId",
+    headerName: "Requested by",
+    width: 230,
+    renderCell: (params) => {
+      // const { data, loading, error } = useFetch(`http://localhost:8000/api/user`);
+      const userId = params.row.userId;
+      return (
+        <>
+          {userId}
+        </>
+      );
+    },
+  },
+  {
+    field: "assignedStaff",
+    headerName: "Status",
+    width: 115,
+    renderCell: (params) => {
+      const isAssigned = params.row.assignedStaff;
+      return (
+        <>
+          {(() => {
+            if (isAssigned != null) {
+              return (
+                <p className="text-green-600">
+                  Assigned
+                </p>
+              )
+            } else {
+              return (
+                <div className="text-rose-600">
+                  Unassigned
+                </div>
+              )
+            }
+          })()}
+        </>
+      );
+    },
+  },
+];
