@@ -1,3 +1,14 @@
+const accessAccount = (id) => {
+  axios.put(`http://localhost:8000/admin/user/access/${id}`, {}, config)
+    .then((res)=>{
+    window.location.reload();
+    toast.success(res.response.data.message);
+    })
+    .catch((err)=>{
+      toast.error(err.response.data.message)
+    });
+};
+
 export const eventTypeColumns = [
   {
     field: "name",
