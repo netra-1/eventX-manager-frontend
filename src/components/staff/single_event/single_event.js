@@ -217,6 +217,39 @@ const SingleEvent = () => {
                     </div>
                 </div>
                 <div>
+                    <div className=" border-b border-gray-200 py-4">
+                        <div onClick={() => setShowDecoration(!showDecoration)} className="flex justify-between items-center cursor-pointer">
+                            <p className="text-base leading-4 text-gray-800">Decoration</p>
+                            <button
+                                className="
+									cursor-pointer
+									focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400
+									rounded
+								"
+                                aria-label="show or hide"
+                            >
+                                <svg className={"transform " + (showDecoration ? "rotate-180" : "rotate-0")} width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 1L5 5L1 1" stroke="#4B5563" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                            </button>
+                        </div>
+                        {decorations.map((data) => {
+                        // console.log(data._id.name);
+                        const list = (
+                            <>
+                                <div className={"border-t border-gray-200 py-1 flex items-center justify-between pt-1 text-base leading-normal pr-1 mt-4 text-gray-600 " + (showDecoration ? "block" : "hidden")} id="sect">
+                                    <p className="text-base leading-normal text-gray-600">{data.name}</p>
+                                    <div className="flex items-center justify-center">
+                                    </div>
+                                </div>
+                                <div className={"xl:w-3/6 lg:w-2/5 w-80 flex d-block py-4 flex items-center justify-between pt-1 text-base leading-normal pr-1 text-gray-600 " + (showDecoration ? "block" : "hidden")} id="sect">
+                                    <img className="w-full px-1" alt="img of a girl posing" src={data.image.url} />
+                                </div>
+                            </>
+                        );
+                        return list;
+                        })}
+                    </div>
                 </div>
             </div>
         </div>
