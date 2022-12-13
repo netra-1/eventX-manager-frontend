@@ -6,6 +6,7 @@ import { HiOutlineChatAlt2 } from 'react-icons/hi';
 
 const SingleEvent = () => {
 
+
     return (
         <div className="md:flex items-start justify-center py-12 2xl:px-20 md:px-6 px-4">
             <div className="xl:w-2/6 lg:w-2/5 w-80 md:block hidden">
@@ -145,6 +146,77 @@ const SingleEvent = () => {
                             <img className="w-full " alt="img of a girl posing" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1498&q=80" />
                         </div>
                     </div>
+                </div>
+                <div>
+                    <div className=" border-b border-gray-200 py-4">
+                        <div onClick={() => setShowDrinks(!showDrinks)} className="flex justify-between items-center cursor-pointer">
+                            <p className="text-base leading-4 text-gray-800">Drinks</p>
+                            <button
+                                className="
+									cursor-pointer
+									focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400
+									rounded
+								"
+                                aria-label="show or hide"
+                            >
+                                <svg className={"transform " + (showDrinks ? "rotate-180" : "rotate-0")} width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 1L5 5L1 1" stroke="#4B5563" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                            </button>
+                        </div>
+                        {drinks.map((data) => {
+                        // console.log(data._id.name);
+                        const list = (
+                            <>
+                                <div className={"border-t border-gray-200 py-1 flex items-center justify-between pt-1 text-base leading-normal pr-1 mt-4 text-gray-600 " + (showDrinks ? "block" : "hidden")} id="sect">
+                                    <p className="text-base leading-normal text-gray-600">{data._id.name}</p>
+                                    <div className="flex items-center justify-center">
+                                        <p className="text-sm leading-none text-gray-600">Quantity: {data.quantity}</p>
+                                    </div>
+                                </div>
+                            </>
+                        );
+                        return list;
+                        })}
+                    </div>
+                </div>
+                <div>
+                    <div className=" border-b border-gray-200 py-4">
+                        <div onClick={() => setShowCakes(!showCakes)} className="flex justify-between items-center cursor-pointer">
+                            <p className="text-base leading-4 text-gray-800">Cakes</p>
+                            <button
+                                className="
+									cursor-pointer
+									focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400
+									rounded
+								"
+                                aria-label="show or hide"
+                            >
+                                <svg className={"transform " + (showCakes ? "rotate-180" : "rotate-0")} width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 1L5 5L1 1" stroke="#4B5563" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                            </button>
+                        </div>
+                        {cakes.map((data) => {
+                        // console.log(data._id.name);
+                        const list = (
+                            <>
+                                <div className={"border-t border-gray-200 py-1 flex items-center justify-between pt-1 text-base leading-normal pr-1 mt-4 text-gray-600 " + (showCakes ? "block" : "hidden")} id="sect">
+                                    <p className="text-base leading-normal text-gray-600">{data._id.name}</p>
+                                    <div className="flex items-center justify-center">
+                                        <p className="text-sm leading-none text-gray-600">{data.pound} pound</p>
+                                    </div>
+                                </div>
+                                <div className={"xl:w-3/6 lg:w-2/5 w-80 flex d-block py-4 flex items-center justify-between pt-1 text-base leading-normal pr-1 text-gray-600 " + (showCakes ? "block" : "hidden")} id="sect">
+                                    <img className="w-full px-1" alt="img of a girl posing" src={data._id.image.url} />
+                                </div>
+                            </>
+                        );
+                        return list;
+                        })}
+                    </div>
+                </div>
+                <div>
                 </div>
             </div>
         </div>
