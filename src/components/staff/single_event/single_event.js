@@ -5,7 +5,58 @@ import moment from 'moment';
 import { HiOutlineChatAlt2 } from 'react-icons/hi';
 
 const SingleEvent = () => {
+    const { id } = useParams();
+    const [show, setShow] = useState(false);
+    const [showDecoration, setShowDecoration] = useState(false);
+    const [showDrinks, setShowDrinks] = useState(false);
+    const [showCakes, setShowCakes] = useState(false);
+    const [details, setDetails] = useState([]);
+    const [userData, setUserData] = useState([]);
+    const [fullname, setFullName] = useState([]);
+    const [staffName, setStaffName] = useState([]);
+    const [venue, setVenue] = useState([]);
+    const [drinks, setDrinks] = useState([]);
+    const [cakes, setCakes] = useState([]);
+    const [decorations, setDecorations] = useState([]);
+    const [assignedStaff, setAssignedStaff] = useState([]);
+    const [isAssigned, setIsAssigned] = useState(false);
 
+
+    const config = {
+        headers : {
+            Authorization : localStorage.getItem('token'),
+        }
+      }
+
+    useEffect(() => {
+        axios
+          .get("http://localhost:8000/admin/event/"+ id, config)
+          .then((result) => {
+            console.log(result.data.data);
+            setDetails(result.data.data);
+            setUserData(result.data.data.userId);
+            setFullName(result.data.data.userId.profile);
+            setStaffName(result.data.data.assignedStaff.profile);
+            setAssignedStaff(result.data.data.assignedStaff);
+            setVenue(result.data.data.venue);
+            setDrinks(result.data.data.drinks);
+            setCakes(result.data.data.cakes);
+            setDecorations(result.data.data.decorations);
+            console.log(result.data.data.assignedStaff);
+            if (assignedStaff){
+                setIsAssigned(true)
+              } else{
+                setIsAssigned(false)
+              }
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }, []);
+
+    //   console.log(assignedStaff)
+
+      
 
     return (
         <div className="md:flex items-start justify-center py-12 2xl:px-20 md:px-6 px-4">
