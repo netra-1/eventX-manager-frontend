@@ -66,20 +66,150 @@ const Datatable = ({columns}) => {
     {
       field: "action",
       headerName: "Action",
-      width: 200,
+      width: 220,
       renderCell: (params) => {
         return (
-          <div className="cellAction">
-            <Link style={{ textDecoration: "none" }} to={'/'+path+'/update/'+params.row._id}>
-              <div className="viewButton">Update</div>
-            </Link>
-            <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row._id)}
-            >
-              Delete
-            </div>
-          </div>
+          <>
+          {(() => {
+            if (path == "event") {
+              return (
+                <>
+                  <div className="cellAction">
+                  <Link style={{ textDecoration: "none" }} to={'/staff/single_event/' + params.row._id}>
+                    <div className="viewButton">View</div>
+                  </Link>
+
+                  {
+                    params.row.assignedStaff ?
+                    <div></div>
+                    : <div
+                        className="successButton"
+                        onClick={() => assignEvent(params.row._id)}
+                      >
+                        Assign
+                      </div>
+                  }
+                </div>
+                </>
+              )
+            } else if (path == "my_events") {
+              return (
+                <>
+                  <div className="cellAction">
+                  <Link style={{ textDecoration: "none" }} to={'/staff/single_event/' + params.row._id}>
+                    <div className="viewButton">View</div>
+                  </Link>
+
+                  {
+                    params.row.assignedStaff ?
+                    <div></div>
+                    : <div
+                        className="successButton"
+                        onClick={() => assignEvent(params.row._id)}
+                      >
+                        Assign
+                      </div>
+                  }
+                </div>
+                </>
+              )
+            }
+            else if (path =="customer") {
+              return (
+                <>
+                  {(() => {
+                    if (params.row.access == true) {
+                      return (
+                        <>
+                          <div className="cellAction">
+                            <div
+                              className="cellAction deleteButton"
+                              onClick={() => {
+                                if(window.confirm(`Are you sure you want to revoke this user's access?`)){
+                                  accessAccount(params.row._id)
+                                }
+                              }}
+                            >
+                              Revoke Access
+                            </div>
+                          </div>
+                        </>
+                      )
+                    } else {
+                      return(
+                        <div className="cellAction">
+                        <div
+                          className="cellAction viewButton px-4"
+                          onClick={() => {
+                            if(window.confirm(`Are you sure you want to grant this user's access?`)){
+                              accessAccount(params.row._id)
+                            }
+                          }}
+                        >
+                          Grant Access
+                        </div>
+                      </div>
+                      )
+                    }
+                  })()}
+                </>
+              )
+            }
+            else if(path == "announcement") {
+              return (
+                <div className="cellAction">
+                  <div
+                    className="deleteButton"
+                    onClick={() => {
+                      if(window.confirm('Are you sure you want to delete this announcement?')){
+                        handleDelete(params.row._id)
+                      }
+                    }}
+                  >
+                    Delete
+                  </div>
+                  {!params.row.published && (
+                    <>
+                  <Link style={{ textDecoration: "none" }} to={'/'+path+'/update/'+params.row._id}>
+                    <div className="viewButton">Update</div>
+                  </Link>
+                  <div
+                    className="successButton"
+                    onClick={() => {
+                      if(window.confirm('Are you sure you want to publish this announcement?')){
+                        handlePublish(params.row._id)}
+                      }
+                    }
+                  >
+                    Publish
+                  </div>
+                  </>
+                  )}
+
+                </div>
+              )
+            }
+             else {
+              return (
+                <div className="cellAction">
+                  <Link style={{ textDecoration: "none" }} to={'/'+path+'/update/'+params.row._id}>
+                    <div className="viewButton">Update</div>
+                  </Link>
+                  <div
+                    className="deleteButton"
+                    onClick={() => {
+                      if(window.confirm(`Are you sure you want to delete this ${path}?`)){
+                        handleDelete(params.row._id)
+                      }
+                    }}
+                  >
+                    Delete
+                  </div>
+                </div>
+              )
+            }
+          })()}
+          </>
         );
       },
     },
