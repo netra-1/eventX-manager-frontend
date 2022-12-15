@@ -5,7 +5,38 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const ChangePassword =()=>{ 
+const ChangePassword =()=>{
+      const [currentPassword, setCurrentPassword] = useState("");
+      const [newPassword, setNewPassword] = useState("");
+
+      const config = {
+        headers: {
+        Authorization: localStorage.getItem("token"),
+        },
+      };
+
+      const handleClick = async (e) => {
+        e.preventDefault();
+
+        const data = {
+            prevPassword : currentPassword,
+            newPassword : newPassword,
+        }
+
+        try {
+        await axios
+            .put("http://localhost:8000/admin/user/change-password", data, config)
+            .then((response) => {
+            localStorage.clear();
+            window.location.replace('/login');
+            toast.success("Password Changed Successfully");
+            console.log(response.data.msg);
+            });
+        } catch (e) {
+        toast.failed("Failed to change password");
+        console.log(e);
+        }
+    }; 
     return(
         <>
             <section class="bg-gray-50">
@@ -41,6 +72,15 @@ const ChangePassword =()=>{
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="New Password"
                     />
+                  </div>
+
+                  <div className="text-center mt-6">
+                    <button onClick={handleClick}
+                      className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                      type="button"
+                    >
+                      SUBMIT
+                    </button>
                   </div>
                 </form>
                     </div>
