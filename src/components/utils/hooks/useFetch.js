@@ -6,11 +6,17 @@ const useFetch = (url) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
+  const config = {
+    headers : {
+        Authorization : localStorage.getItem('token'),
+    }
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(url);
+        const res = await axios.get(url, config);
         setData(res.data.data);
       } catch (err) {
         setError(err);

@@ -30,7 +30,7 @@ const AdminLogin = () =>{
         if (response.data.data.token) {
           toast.success("Login success!");
             // it will save the token locally, so that it is available
-            // staff section is same as manager...... where category == STAFF for staff
+            // all over the component
             localStorage.setItem("token", response.data.data.token);
             localStorage.setItem("category",response.data.data.user.category)
             localStorage.setItem("staff_id",response.data.data.user._id)

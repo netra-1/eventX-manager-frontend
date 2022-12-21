@@ -66,20 +66,28 @@
     align-items: center;
     gap: 15px;
 
-    .viewButton {
+    .viewButton,
+    .deleteButton,
+    .successButton {
       padding: 2px 5px;
       border-radius: 5px;
-      color: darkblue;
-      border: 1px dotted rgba(0, 0, 139, 0.596);
+      border: 1px dotted;
       cursor: pointer;
+    }
+
+    .viewButton{
+      color: darkblue;
+      border-color:  rgba(0, 0, 139, 0.596);
     }
     
     .deleteButton {
-      padding: 2px 5px;
-      border-radius: 5px;
       color: crimson;
-      border: 1px dotted rgba(220, 20, 60, 0.6);
-      cursor: pointer;
+      border-color: rgba(220, 20, 60, 0.6);
+    }
+    
+    .successButton {
+      color: green;
+      border-color: green;
     }
   }
 }
